@@ -4,17 +4,15 @@ const { Posts, Likes } = require("../models");
 const {validateToken} = require("../middlewares/AuthMiddleware");
 
 router.get("/", validateToken, async (req, res) => {
-  // 144, include를 추가해줌.
+  // include를 추가해줌.
   const listOfPosts = await Posts.findAll({include: [Likes]});
-  // 154 유효성 검사를 위해 validateToken 추가, 사용자 id를 포함하는 모든 좋아요를 쿼리
+  // 유효성 검사를 위해 validateToken 추가, 사용자 id를 포함하는 모든 좋아요를 쿼리
   const likedPosts = await Likes.findAll({where: {UserId: req.user.id}})
   // likedPosts 이전
   // res.json(listOfPosts);
-  // 163
   res.json({listOfPosts: listOfPosts, likedPosts: likedPosts});
 });
 
-// 57
 router.get('/byId/:id', async (req, res) => {
   const id = req.params.id;
   // db 기본키
@@ -33,7 +31,6 @@ router.post("/", validateToken, async (req, res) => {
   res.json(post);
 });
 
-// 169
 router.delete("/:postId", validateToken, async (req, res) => {
   const postId = req.params.postId;
   await Posts.destroy({

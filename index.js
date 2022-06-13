@@ -39,7 +39,7 @@ app.use("/volcollection", volsRouter);
 
 // db sequlize 연결 (1)
 db.sequelize.sync().then(()=>{
-    app.listen(3001,()=>{
+    app.listen(process.env.PORT || 3001,()=>{
         // 서버 구동 확인
         console.log("running on server 3001");
     })
