@@ -6,7 +6,10 @@ app.use(cors());
 // model 폴더로부터 db 가져오기
 const db = require("./models");
 const mysql = require('mysql');
+// const multer = require('multer');
+app.use(express.static("public"));
 require("dotenv").config();
+
 
 // Post Router
 const postRouter = require('./routes/Posts');
@@ -20,17 +23,23 @@ app.use("/comments", commentsRouter);
 const usersRouter = require('./routes/Users');
 app.use("/auth", usersRouter);
 
+// Likes Router
+const likesRouter = require('./routes/Likes');
+app.use("/likes", likesRouter);
+
 // Foods Router
 const foodsRouter = require('./routes/Foods');
 app.use("/api", foodsRouter);
 
-// Foods Router
-const likesRouter = require('./routes/Likes');
-app.use("/likes", likesRouter);
+// volcollection Router
+const volsRouter = require('./routes/Volcollection');
+app.use("/volcollection", volsRouter);
+
+
 
 // db sequlize 연결 (1)
 db.sequelize.sync().then(()=>{
-    app.listen(process.env.PORT || 3001,()=>{
+    app.listen(3001,()=>{
         // 서버 구동 확인
         console.log("running on server 3001");
     })
