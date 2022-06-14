@@ -34,11 +34,11 @@ router.post("/login", async (req, res) => {
       if (!match) {
         res.json({ error: "Wrong Username And Password Combination" });
       } else {
-        // 92, 로그인 jsonwebtoken 생성
+        // 로그인 jsonwebtoken 생성
         const accessToken = sign(
           {username: user.username, id: user.id}, "importantsecret"
         );
-        // 127, 세션 스토리지에 저장하기 위해 accessToken 보내기 (xss취약)
+        // 세션 스토리지에 저장하기 위해 accessToken 보내기 (xss취약)
         res.json({token: accessToken, username: username, id: user.id});
       }
     });
